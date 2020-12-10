@@ -1,0 +1,14 @@
+#Ansible Playbook to create files 2
+---
+- name: create directory and files
+  hosts: host
+  become: yes
+  tasks:
+   - name: Create dir25g
+     file: path=/home/ansible/dir25g state=directory owner=ansible group=ansible
+   - name: Create file25g
+     file: path=/home/ansible/file25g state=touch owner=ansible group=ansible
+   - name: Copy file into directory
+     copy: src=/home/ansible/file25g dest=/home/ansible/dir25g remote_src=yes   
+
+

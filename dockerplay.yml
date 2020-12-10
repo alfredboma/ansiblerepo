@@ -1,0 +1,20 @@
+---
+- hosts: host
+  become: true
+  tasks:
+   - name: Remove Existing Docker Application
+     shell: yum remove -y docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+   - name: Install Containerd
+     shell: dnf install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+   - name: Install Docker-ce
+     shell: dnf install -y docker-ce
+   - name: Start Docker Daemon
+     shell: systemctl enable --now docker
+   - name: Check Docker Daemon
+     shell: systemctl status docker
+   - name: Verify Installation and check version
+     shell: docker -v
+   - name: Disable selinux
+     shell: setenforce 0
+   - name: Permanently Disable Selinux
+     replace: path=/etc/sysconfig/selinux regexp='SELINUX=enforcing' replace='SELINUX=disabled'

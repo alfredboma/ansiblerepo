@@ -1,0 +1,11 @@
+#Create A User Ansible Playbook
+---
+- name: useradd
+  hosts: host
+  become: yes
+  tasks:
+   - name: User Module
+     user: name=jmadis comment="James Madis" password=ASb3QOpYBfP1I
+   - name: Expire his initial password so he is prompted for new password
+     shell: chage -d 0 jmadis
+
